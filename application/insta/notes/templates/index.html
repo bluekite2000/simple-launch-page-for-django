@@ -15,7 +15,24 @@
 		<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		
+			 <script type="text/javascript">
+	  /*<![CDATA[*/
+	  jQuery(function() {
+	      var form = jQuery("#contact-form");
+	      form.submit(function(e) {
+	          jQuery("#signup-wrapper").load(
+		          
+	              form.attr('action') + ' #signup-wrapper',
+	              form.serializeArray(),
+	              function(responseText, responseStatus) {
+	                  jQuery("#sendbutton").attr('disabled', false)
+	              }
+	          );
+	          e.preventDefault(); 
+	      });
+	  });
+	  /*]]>*/
+	  </script>
 	</head>
 	<body>
 		<div class="wrapper">
@@ -34,10 +51,21 @@
 			<div class="hr"></div>
 			<section class="mailing-list">
 				<h2>Want to be the first to know when we're ready?</h2>
-				<form>
-					<input type="text" value="your@email.com" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
-					<input type="submit" value="Subscribe">	
-				</form>
+				       <form id="contact-form"  method="post"  action="{%url contact_form  %}"> 
+	          <div class="grid_8 prefix_1" id="signup-wrapper"> 
+			  {% csrf_token %}
+		     {{ form.non_field_errors }}
+		
+              
+              <p> 
+               	    {{ form.as_table}}
+			
+                Please let me know when you launch.
+              </p> 
+              <p id="form-error-message"></p> 
+              <input class="grid_2 alpha btn" type="submit" id="signup-btn" value="Sign me up."> 
+           </div>
+            </form> 
 			</section><div class="clear"></div>
 			<div class="hr"></div>
 			

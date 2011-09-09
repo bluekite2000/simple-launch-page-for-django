@@ -1,12 +1,13 @@
 from django.conf.urls.defaults import *
-from models import Note
+from django.views.generic.simple import direct_to_template
+from notes.views import *
 
 
-notes = Note.objects.all()
 
-urlpatterns = patterns(
-    '',
-    (r'^$','notes.views.upload_page'),
+urlpatterns = patterns('notes.views',
+    url(r'^$', 'contact_form', name="contact_form"),
+    url(r'^thanks/$', direct_to_template, {'template': 'thanks.html'},name="thanks"),
+
 
 )
 
